@@ -61,6 +61,27 @@ class JobFactory {
     }
     factory.folder(projectBaseBuildPath) {
       description("Jobs for building the $gitRepoName project")
+      properties {
+        folderLibraries {
+          libraries { // allow us to fetch the libraries in `buildutilities`
+            libraryConfiguration {
+              name 'managed-java-pipeline-library'
+              implicit false
+              defaultVersion PIPELINE_REPO_BRANCH
+              retriever {
+                modernSCM {
+                  scm {
+                    git {
+                      remote PIPELINE_GIT_REPO_URL
+                      credentialsId SCM_CREDENTIALS_ID
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
