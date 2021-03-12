@@ -34,6 +34,52 @@ class JobFactory {
     }
   }
 
+  static MultibranchWorkflowJob seedJobPrBuilder(DslFactory factory) {
+    factory.multibranchPipelineJob("$BASE_BUILD_PATH/_Seed_PR_Builder") {
+      branchSources {
+        /* for example, when using GitHub */
+        github {
+          apiUri('...')
+          buildForkPRMerge(true)
+          buildOriginBranch(true)
+          buildOriginBranchWithPR(true)
+          buildOriginPRMerge(true)
+          checkoutCredentialsId(SCM_CREDENTIALS_ID)
+          repoOwner(PIPELINE_ORG)
+          repository(PIPELINE_REPO_NAME)
+          scanCredentialsId(SCM_CREDENTIALS_ID)
+          /* id required to be unique, otherwise triggers won't work across duplicates in your Jenkins instance */
+          id("$PIPELINE_ORG-$PIPELINE_REPO_NAME-seed-mb")
+        }
+      }
+      factory {
+        remoteJenkinsFileWorkflowBranchProjectFactory {
+          scriptPath('jobs/build_seed.Jenkinsfile')
+          localMarker('') /* everything is valid */
+          remoteJenkinsFileSCM {
+            gitSCM {
+              userRemoteConfigs {
+                userRemoteConfig {
+                  name('origin')
+                  url(PIPELINE_GIT_REPO_URL)
+                  refspec("+refs/heads/$PIPELINE_REPO_BRANCH:refs/remotes/origin/$PIPELINE_REPO_BRANCH")
+                  credentialsId(SCM_CREDENTIALS_ID)
+                }
+              }
+              branches {
+                branchSpec {
+                  name(PIPELINE_REPO_BRANCH)
+                }
+              }
+              browser {}
+              gitTool('/usr/bin/env git')
+            }
+          }
+        }
+      }
+    }
+  }
+
   private final DslFactory factory
   private final String gitOrgName
   private final String gitRepoName
