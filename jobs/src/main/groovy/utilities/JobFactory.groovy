@@ -63,7 +63,8 @@ class JobFactory {
       description("Jobs for building the $gitRepoName project")
       properties {
         folderLibraries {
-          libraries { // allow us to fetch the libraries in `buildutilities`
+          libraries {
+            // allow us to fetch the libraries in `buildutilities`
             libraryConfiguration {
               name 'managed-java-pipeline-library'
               implicit false

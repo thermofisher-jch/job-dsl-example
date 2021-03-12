@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 
 dependencies {
-	implementation 'org.codehaus.groovy:groovy:2.5.14'
-	implementation 'org.jenkins-ci.plugins:job-dsl-core:1.77'
-	implementation 'io.jenkins.plugins:remote-file:1.14'
+  implementation 'org.codehaus.groovy:groovy:2.5.14'
+  implementation 'org.jenkins-ci.plugins:job-dsl-core:1.77'
+  implementation 'io.jenkins.plugins:remote-file:1.14'
 }
