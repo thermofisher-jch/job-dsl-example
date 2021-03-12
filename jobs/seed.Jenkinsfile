@@ -3,7 +3,7 @@ node {
     checkout scm
   }
   stage('Compile') {
-    sh './gradlew clean :jobs:build'
+    sh './gradlew clean build'
   }
   stage('Seed Jenkins') {
     jobDsl targets: 'jobs/src/main/groovy/definitions/**/*.groovy',

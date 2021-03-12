@@ -3,6 +3,6 @@ node {
     checkout scm
   }
   stage('Compile') {
-    sh './gradlew clean :jobs:build'
+    sh './gradlew clean build'
   }
 }
