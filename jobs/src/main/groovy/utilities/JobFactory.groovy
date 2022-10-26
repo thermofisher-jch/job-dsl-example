@@ -54,20 +54,20 @@ class JobFactory {
       }
       configure {
         def aFactory = it / 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory'
-        // aFactory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
-        // scm(class: 'hudson.plugins.git.GitSCM') {
-        //   userRemoteConfigs {
-        //     'hudson.plugins.git.UserRemoteConfig' {
-        //       url(PIPELINE_GIT_REPO_URL)
-        //     }
-        //   }
-        //   branches {
-        //     'hudson.plugins.git.BranchSpec' {
-        //       name(PIPELINE_REPO_BRANCH)
-        //     }
-        //   }
-        // }
-        // scriptPath('jobs/buildPR.Jenkinsfile')
+        aFactory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
+        scm(class: 'hudson.plugins.git.GitSCM') {
+          userRemoteConfigs {
+            'hudson.plugins.git.UserRemoteConfig' {
+              url(PIPELINE_GIT_REPO_URL)
+            }
+          }
+          branches {
+            'hudson.plugins.git.BranchSpec' {
+              name(PIPELINE_REPO_BRANCH)
+            }
+          }
+        }
+        scriptPath('jobs/buildPR.Jenkinsfile')
       }
     }
   }
@@ -150,17 +150,17 @@ class JobFactory {
         }
       }
       configure {
-        def aFactory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
+        def aFactory = it / 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory'
         aFactory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
         scm(class: 'hudson.plugins.git.GitSCM') {
           userRemoteConfigs {
             'hudson.plugins.git.UserRemoteConfig' {
-              url(Constants.PIPELINE_GIT_REPO_URL)
+              url(PIPELINE_GIT_REPO_URL)
             }
           }
           branches {
             'hudson.plugins.git.BranchSpec' {
-              name(Constants.PIPELINE_REPO_BRANCH)
+              name(PIPELINE_REPO_BRANCH)
             }
           }
         }
