@@ -52,30 +52,22 @@ class JobFactory {
           id("$PIPELINE_ORG-$PIPELINE_REPO_NAME-seed-mb")
         }
       }
-      factory {
-        remoteJenkinsFileWorkflowBranchProjectFactory {
-          scriptPath('jobs/build_seed.Jenkinsfile')
-          localMarker('') /* everything is valid */
-          remoteJenkinsFileSCM {
-            gitSCM {
-              userRemoteConfigs {
-                userRemoteConfig {
-                  name('origin')
-                  url(PIPELINE_GIT_REPO_URL)
-                  refspec("+refs/heads/$PIPELINE_REPO_BRANCH:refs/remotes/origin/$PIPELINE_REPO_BRANCH")
-                  credentialsId(SCM_CREDENTIALS_ID)
-                }
-              }
-              branches {
-                branchSpec {
-                  name(PIPELINE_REPO_BRANCH)
-                }
-              }
-              browser {}
-              gitTool('/usr/bin/env git')
+      configure {
+        def factory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
+        factory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
+        scm(class: 'hudson.plugins.git.GitSCM') {
+          userRemoteConfigs {
+            'hudson.plugins.git.UserRemoteConfig' {
+              url(PIPELINE_GIT_REPO_URL)
+            }
+          }
+          branches {
+            'hudson.plugins.git.BranchSpec' {
+              name(PIPELINE_REPO_BRANCH)
             }
           }
         }
+        scriptPath('jobs/buildPR.Jenkinsfile')
       }
     }
   }
@@ -157,30 +149,22 @@ class JobFactory {
           id("$PIPELINE_ORG-$PIPELINE_REPO_NAME-$gitOrgName-$gitRepoName-mb")
         }
       }
-      factory {
-        remoteJenkinsFileWorkflowBranchProjectFactory {
-          scriptPath(script)
-          localMarker('') /* everything is valid */
-          remoteJenkinsFileSCM {
-            gitSCM {
-              userRemoteConfigs	{
-                userRemoteConfig {
-                  name('origin')
-                  url(PIPELINE_GIT_REPO_URL)
-                  refspec("+refs/heads/$PIPELINE_REPO_BRANCH:refs/remotes/origin/$PIPELINE_REPO_BRANCH")
-                  credentialsId(SCM_CREDENTIALS_ID)
-                }
-              }
-              branches {
-                branchSpec {
-                  name(PIPELINE_REPO_BRANCH)
-                }
-              }
-              browser {}
-              gitTool('/usr/bin/env git')
+      configure {
+        def factory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
+        factory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
+        scm(class: 'hudson.plugins.git.GitSCM') {
+          userRemoteConfigs {
+            'hudson.plugins.git.UserRemoteConfig' {
+              url(Constants.PIPELINE_GIT_REPO_URL)
+            }
+          }
+          branches {
+            'hudson.plugins.git.BranchSpec' {
+              name(Constants.PIPELINE_REPO_BRANCH)
             }
           }
         }
+        scriptPath(script)
       }
     }
   }
