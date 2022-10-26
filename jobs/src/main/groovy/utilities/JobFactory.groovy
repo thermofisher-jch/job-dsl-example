@@ -53,8 +53,8 @@ class JobFactory {
         }
       }
       configure {
-        def factory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
-        factory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
+        def aFactory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
+        aFactory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
         scm(class: 'hudson.plugins.git.GitSCM') {
           userRemoteConfigs {
             'hudson.plugins.git.UserRemoteConfig' {
@@ -150,8 +150,8 @@ class JobFactory {
         }
       }
       configure {
-        def factory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
-        factory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
+        def aFactory = it / factory(class: 'com.cloudbees.workflow.multibranch.CustomBranchProjectFactory')
+        aFactory << definition(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition')
         scm(class: 'hudson.plugins.git.GitSCM') {
           userRemoteConfigs {
             'hudson.plugins.git.UserRemoteConfig' {
